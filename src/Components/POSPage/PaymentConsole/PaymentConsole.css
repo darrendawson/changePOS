@@ -2,4 +2,6 @@
   height: 100%;
   width: 100%;
   background-color: blue;
+  flex-grow: 0;
+  display: flex;
 }
