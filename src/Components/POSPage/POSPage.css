@@ -1,0 +1,12 @@
+#POSPage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+
+#POSPage .half_page_container {
+  width: calc(50% - 60px);
+  height: calc(100% - 60px);
+  padding: 30px;
+}
