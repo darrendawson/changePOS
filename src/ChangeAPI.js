@@ -11,7 +11,7 @@
    - /get/user/bankaccount
 */
 
-let __url = "http://160307eb.ngrok.io";
+let __url = "http://27c223b7.ngrok.io";
 
 let __defaultProfileID = "5e52a2f9-2e37-4699-94c9-165aa38a7271"
 let __defaultStoreID = "b7acdf48-cb62-4cf5-8389-61d361fa727f";
@@ -20,11 +20,11 @@ let __defaultStoreID = "b7acdf48-cb62-4cf5-8389-61d361fa727f";
 let __defaultTransactionDict = {
   "storeID": __defaultStoreID,
   "userID": __defaultProfileID,
-  "store_name": "Walmart",
+  "store_name": "Ikes Sandwiches",
   "store_loc": JSON.stringify({"lat": "test"}),
   "user_loc": JSON.stringify({"lat": "test"}),
   "store_to_person": true,
-  "change_amount": 0.73,
+  "change_amount": 0.11,
   "cash_amount": 10.2,
   "receipt": "slkdfjlkdsjf"
 }
@@ -63,7 +63,7 @@ class ChangeAPI {
   // Transactions --------------------------------------------------------------
 
   // performs a transaction (creates a new one)
-  async createTransaction() {
+  async createTransaction(transactionObject) {
     let api_url = __url + "/do/transaction";
     let response = await fetch(api_url, {
       method: 'POST',
@@ -72,7 +72,7 @@ class ChangeAPI {
        'Accept': 'application/json',
        'Content-Type': 'application/json',
      },
-     body: JSON.stringify(__defaultTransactionDict)
+     body: JSON.stringify(transactionObject)
     })
 
     .then(function (data) {

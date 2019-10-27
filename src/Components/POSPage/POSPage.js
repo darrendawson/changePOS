@@ -18,6 +18,11 @@ import ChangeAPI from '../../ChangeAPI.js';
 let changeAPI = new ChangeAPI();
 
 
+let __defaultProfileID = "5e52a2f9-2e37-4699-94c9-165aa38a7271"
+let __defaultStoreID = "b7acdf48-cb62-4cf5-8389-61d361fa727f";
+
+
+
 // =============================================================================
 // Fake Data
 // =============================================================================
@@ -129,14 +134,45 @@ class POSPage extends Component {
   }
 
   onClick_finishTransaction = () => {
-    this.finishTransaction();
+    let totalCost = this.getTotalCost();
+    let cashGiven = Number(this.state.truth[PT_cashGiven]);
+    let change = 0;
+    if (cashGiven > totalCost) {
+      change = cashGiven - totalCost;
+    } else if (totalCost >= cashGiven) {
+      change = totalCost - cashGiven;
+    }
+
+    let transactionObject = {
+      "storeID": __defaultStoreID,
+      "userID": __defaultProfileID,
+      "store_name": "Ikes Sandwiches",
+      "store_loc": JSON.stringify({"lat": "test"}),
+      "user_loc": JSON.stringify({"lat": "test"}),
+      "store_to_person": (cashGiven > totalCost),
+      "change_amount": change,
+      "cash_amount": cashGiven,
+      "receipt": "slkdfjlkdsjf"
+    }
+    this.api_finishTransaction(transactionObject);
+    this.onClick_cancelOrder();
   }
 
+  // calculates the total cost of the purchase
+  getTotalCost = () => {
+    let total = 0;
+    let orderDetails = this.state.truth[PT_customerOrder];
+    for (let i = 0; i < orderDetails.length; i++) {
+      total += (orderDetails[i]['price'] * orderDetails[i]['quantity']);
+    }
+    total = (108 / 100) * total;
+    return total;
+  }
 
   // API calls -----------------------------------------------------------------
 
-  async api_finishTransaction() {
-    let result = await changeAPI.createTransaction();
+  async api_finishTransaction(transactionObject) {
+    let result = await changeAPI.createTransaction(transactionObject);
     console.log(result);
   }
 
