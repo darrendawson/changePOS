@@ -47,7 +47,7 @@ class SelectUser extends Component {
     return (
       <div id="SelectUser">
         <div id="title_container">
-          <h1 id="title">Select a Customer</h1>
+          <h1 id="title"> >Select a Customer</h1>
         </div>
 
         <div id="users_container">

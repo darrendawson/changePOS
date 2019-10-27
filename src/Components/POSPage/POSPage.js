@@ -14,20 +14,6 @@ import Ustra from '../../Ustra.js';
 import ImagePicker from '../../ImagePicker.js';
 
 
-// =============================================================================
-// Ustra
-// =============================================================================
-
-
-// path tags
-const PT_selectedUserID = "selectedUserID";
-
-// what App.state will look like
-let dataSkeleton = {
-  [PT_selectedUserID]: false
-};
-
-var ustra = new Ustra(dataSkeleton);
 
 // =============================================================================
 // Fake Data
@@ -54,6 +40,35 @@ const __users = [
   {"name": "Annie Kan", "profilePic": __imagePicker.getHeadshot(12), "phone": "(408) 921-5647", "id": "ooZ0heeHu"},
   {"name": "Cole Henderson", "profilePic": __imagePicker.getHeadshot(13), "phone": "(650) 989-4675", "id": "aXaiwaey9"},
 ];
+
+const __orders = [
+  {"item_name": "Burrito", "price": 12.3, "quantity": 1},
+  {"item_name": "milkshake", "price": 5.0, "quantity": 2},
+];
+
+
+
+// =============================================================================
+// Ustra
+// =============================================================================
+
+
+
+// path tags
+const PT_selectedUserID = "selectedUserID";
+const PT_customerOrder = "customerOrder";
+const PT_cashGiven = "cashGiven";
+
+// what App.state will look like
+let dataSkeleton = {
+  [PT_selectedUserID]: false,
+  [PT_customerOrder]: __orders,
+  [PT_cashGiven]: "0"
+};
+
+var ustra = new Ustra(dataSkeleton);
+
+
 
 // =============================================================================
 // <POSPage/>
@@ -83,6 +98,36 @@ class POSPage extends Component {
     });
   }
 
+  // onClick -------------------------------------------------------------------
+
+  // cancels a user and resets <POSPage/> state
+  onClick_cancelOrder = () => {
+    this.update(false, PT_selectedUserID);
+    this.update(0, PT_cashGiven);
+  }
+
+  // updates the amount of cash a customer is expected to give
+  // -> this amount is a string and will be converted to an int later
+  onClick_updateCashAmount = (newAmount) => {
+    if (this.state.truth[PT_cashGiven] !== newAmount) {
+      this.update(newAmount, PT_cashGiven);
+    }
+  }
+
+  // get -----------------------------------------------------------------------
+
+  // returns the currently selected user
+  getCurrentlySelectedUser = () => {
+    if (this.state.truth[PT_selectedUserID] !== false) {
+      // search for user with the right ID
+      for (let i = 0; i < __users.length; i++) {
+        if (__users[i]['id'] === this.state.truth[PT_selectedUserID]) {
+          return __users[i];
+        }
+      }
+    }
+    return false;
+  }
 
   // render --------------------------------------------------------------------
 
@@ -111,11 +156,30 @@ class POSPage extends Component {
 
   // renders <PaymentConsole/> to show details about a payment and let cashier make transaction
   renderPaymentConsole = () => {
-    return (
-      <div className="half_page_container">
-        <PaymentConsole/>
-      </div>
-    );
+
+    let selectedUser = this.getCurrentlySelectedUser();
+    if (selectedUser !== false) {
+      return (
+        <div className="half_page_container">
+          <PaymentConsole
+            storeName="Ike's Sandwiches"
+            customerName={selectedUser.name}
+            orderDetails={this.state.truth[PT_customerOrder]}
+            cashGiven={this.state.truth[PT_cashGiven]}
+            onClick_cancelOrder={this.onClick_cancelOrder}
+            onClick_updateCashAmount={this.onClick_updateCashAmount}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="half_page_container">
+          <div id="empty_payment_console">
+          </div>
+        </div>
+      );
+    }
+
   }
 
   // Renders <POSPage/>
