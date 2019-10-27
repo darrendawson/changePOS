@@ -5,6 +5,7 @@ import './App.css';
 // components
 import Navbar from './Components/Navbar/Navbar.js';
 import POSPage from './Components/POSPage/POSPage.js';
+import GodView from './Components/GodView/GodView.js';
 
 
 // =============================================================================
@@ -15,8 +16,20 @@ class App extends Component {
 
   constructor() {
     super();
+    this.state = {
+      "currentPage": "pos"
+    }
   }
 
+  // onClick -------------------------------------------------------------------
+
+  onClick_togglePage = () => {
+    if (this.state.currentPage === "pos") {
+      this.setState({"currentPage": "god"});
+    } else if (this.state.currentPage === "god") {
+      this.setState({"currentPage": "pos"});
+    }
+  }
 
 
   // render --------------------------------------------------------------------
@@ -24,17 +37,29 @@ class App extends Component {
   // renders the navbar
   renderNavbar = () => {
     return (
-      <Navbar/>
+      <Navbar
+        currentPage={this.state.currentPage}
+        onClick_togglePage={this.onClick_togglePage}
+      />
     );
   }
 
   // either renders <GodViewPage/> or <POSPage/>
   renderPage = () => {
-    return (
-      <div id="page_container">
-        <POSPage/>
-      </div>
-    );
+    if (this.state.currentPage === "pos") {
+      return (
+        <div id="page_container">
+          <POSPage/>
+        </div>
+      );
+    } else {
+      return (
+        <div id="page_container">
+          <GodView/>
+        </div>
+      );
+    }
+
   }
 
 
