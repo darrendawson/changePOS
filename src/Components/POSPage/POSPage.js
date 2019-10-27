@@ -227,18 +227,29 @@ class POSPage extends Component {
         </div>
       );
     } else {
-      return (
-        <div className="half_page_container">
-          <div id="empty_payment_console">
-            <button className="test_button" onClick={this.api_getAllTransactions}>/get/transactions</button>
-            <button className="test_button" onClick={this.api_getAllTransactionsForUser}>/get/transactions/user</button>
-            <button className="test_button" onClick={this.api_getAllTransactionsForStore}>/get/transactions/store</button>
-            <button className="test_button" onClick={this.api_getUserProfile}>/get/user/profile</button>
-            <button className="test_button" onClick={this.api_getUserBankAccount}>/get/user/bankaccount</button>
-            <button className="test_button" onClick={this.api_finishTransaction}>/do/transaction</button>
+      if (false) {
+        return (
+          <div className="half_page_container">
+            <div id="empty_payment_console">
+              <button className="test_button" onClick={this.api_getAllTransactions}>/get/transactions</button>
+              <button className="test_button" onClick={this.api_getAllTransactionsForUser}>/get/transactions/user</button>
+              <button className="test_button" onClick={this.api_getAllTransactionsForStore}>/get/transactions/store</button>
+              <button className="test_button" onClick={this.api_getUserProfile}>/get/user/profile</button>
+              <button className="test_button" onClick={this.api_getUserBankAccount}>/get/user/bankaccount</button>
+              <button className="test_button" onClick={this.api_finishTransaction}>/do/transaction</button>
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div className="half_page_container">
+            <div id="empty_payment_console">
+              <img style={{'width': '260px'}} src={__imagePicker.getChangeLogo()}/>
+            </div>
+          </div>
+        );
+      }
+
     }
 
   }

@@ -2,6 +2,10 @@
   classes for importing and returning images
 */
 
+// logo
+import changeLogo from './Images/Logo/change_logo.png';
+
+
 // profile images
 import __defaultHeadshot from './Images/People/headshot_0.jpg';
 import headshot1 from './Images/People/headshot_1.jpg';
@@ -81,6 +85,10 @@ class ImagePicker {
     } else {
       return __food[0];
     }
+  }
+
+  getChangeLogo() {
+    return changeLogo;
   }
 }
 
