@@ -44,12 +44,6 @@ const __users = [
   {"name": "Cole Henderson", "profilePic": __imagePicker.getHeadshot(13), "phone": "(650) 989-4675", "id": "aXaiwaey9"},
 ];
 
-const __orders = [
-  {"item_name": "Burrito", "price": 12.3, "quantity": 1},
-  {"item_name": "milkshake", "price": 5.0, "quantity": 2},
-];
-
-
 
 // =============================================================================
 // Ustra
@@ -65,7 +59,7 @@ const PT_cashGiven = "cashGiven";
 // what App.state will look like
 let dataSkeleton = {
   [PT_selectedUserID]: false,
-  [PT_customerOrder]: __orders,
+  [PT_customerOrder]: [],
   [PT_cashGiven]: "0"
 };
 
@@ -107,6 +101,23 @@ class POSPage extends Component {
   onClick_cancelOrder = () => {
     this.update(false, PT_selectedUserID);
     this.update("0", PT_cashGiven);
+    this.update([], PT_customerOrder);
+  }
+
+  // when the cashier clicks on a menu item, it adds that to the current order
+  onClick_addItemToOrder = (itemObject) => {
+    let orders = this.state.truth[PT_customerOrder];
+    let itemInOrderAlready = false;
+    for (let i = 0; i < orders.length; i++) {
+      if (orders[i]['item_name'] === itemObject['item_name']) {
+        itemInOrderAlready = true;
+        orders[i]['quantity'] += 1;
+      }
+    }
+    if (! itemInOrderAlready) {
+      orders.push(itemObject);
+    }
+    this.update(orders, PT_customerOrder);
   }
 
   // updates the amount of cash a customer is expected to give
@@ -187,7 +198,10 @@ class POSPage extends Component {
     } else {
       return (
         <div className="half_page_container">
-          <SelectItems/>
+          <SelectItems
+            currentOrder={this.state.truth[PT_customerOrder]}
+            onClick_addItemToOrder={this.onClick_addItemToOrder}
+          />
         </div>
       );
     }

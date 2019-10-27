@@ -18,6 +18,21 @@ import headshot11 from './Images/People/headshot_11.jpg';
 import headshot12 from './Images/People/headshot_12.jpg';
 import headshot13 from './Images/People/headshot_13.jpg';
 
+
+// food images
+import food1 from './Images/Food/sandwich_1.jpg';
+import food2 from './Images/Food/sandwich_2.jpg';
+import food3 from './Images/Food/sandwich_3.jpg';
+import food4 from './Images/Food/sandwich_4.jpg';
+import food5 from './Images/Food/sandwich_5.jpg';
+import food6 from './Images/Food/sandwich_6.jpg';
+import food7 from './Images/Food/sandwich_7.jpg';
+import food8 from './Images/Food/sandwich_8.jpg';
+import food9 from './Images/Food/sandwich_9.jpg';
+import food10 from './Images/Food/sandwich_10.jpg';
+import food11 from './Images/Food/sandwich_11.jpg';
+
+
 const __headshots = [
   headshot1,
   headshot2,
@@ -34,12 +49,37 @@ const __headshots = [
   headshot13,
 ];
 
+
+const __food = [
+  food1,
+  food2,
+  food3,
+  food4,
+  food5,
+  food6,
+  food7,
+  food8,
+  food9,
+  food10,
+  food11
+];
+
+// Image Picker ----------------------------------------------------------------
+
 class ImagePicker {
   getHeadshot(headshotID = 0) {
     if (headshotID < __headshots.length) {
       return (__headshots[headshotID]);
     } else {
       return __defaultHeadshot;
+    }
+  }
+
+  getFood(foodID = 0) {
+    if (foodID < __food.length) {
+      return (__food[foodID]);
+    } else {
+      return __food[0];
     }
   }
 }
