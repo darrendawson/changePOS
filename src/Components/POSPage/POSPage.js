@@ -103,7 +103,7 @@ class POSPage extends Component {
   // cancels a user and resets <POSPage/> state
   onClick_cancelOrder = () => {
     this.update(false, PT_selectedUserID);
-    this.update(0, PT_cashGiven);
+    this.update("0", PT_cashGiven);
   }
 
   // updates the amount of cash a customer is expected to give

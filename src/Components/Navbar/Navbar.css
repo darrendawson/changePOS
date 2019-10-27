@@ -22,3 +22,8 @@
 #Navbar #god_view_button:hover {
   background-color: #3de023;
 }
+
+#Navbar #logo {
+  height: 40px;
+  margin-right: 10px;
+}
