@@ -143,6 +143,8 @@ class POSPage extends Component {
       change = totalCost - cashGiven;
     }
 
+    change = Math.round(change * 100) / 100
+
     let transactionObject = {
       "storeID": __defaultStoreID,
       "userID": __defaultProfileID,
