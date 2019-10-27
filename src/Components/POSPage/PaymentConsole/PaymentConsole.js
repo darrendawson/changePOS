@@ -252,7 +252,7 @@ class PaymentConsole extends Component {
     return (
       <div id="footer_row">
         <div style={{'width': '100%', 'height': '2px', 'background-color': '#efefef'}}></div>
-        <button id="complete_payment_button">Complete Transaction</button>
+        <button id="complete_payment_button" onClick={this.props.onClick_finishTransaction}>Complete Transaction</button>
       </div>
     );
   }

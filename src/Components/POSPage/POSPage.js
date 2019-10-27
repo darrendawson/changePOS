@@ -13,6 +13,9 @@ import Ustra from '../../Ustra.js';
 // import images
 import ImagePicker from '../../ImagePicker.js';
 
+// API requests
+import ChangeAPI from '../../ChangeAPI.js';
+let changeAPI = new ChangeAPI();
 
 
 // =============================================================================
@@ -114,6 +117,43 @@ class POSPage extends Component {
     }
   }
 
+  onClick_finishTransaction = () => {
+    this.finishTransaction();
+  }
+
+
+  // API calls -----------------------------------------------------------------
+
+  async api_finishTransaction() {
+    let result = await changeAPI.createTransaction();
+    console.log(result);
+  }
+
+  async api_getAllTransactionsForUser() {
+    let result = await changeAPI.getUserTransactions();
+    console.log(result);
+  }
+
+  async api_getAllTransactionsForStore() {
+    let result = await changeAPI.getStoreTransactions();
+    console.log(result);
+  }
+
+  async api_getAllTransactions() {
+    let result = await changeAPI.getAllTransactions();
+    console.log(result);
+  }
+
+  async api_getUserBankAccount() {
+    let result = await changeAPI.getUserBankAccount();
+    console.log(result);
+  }
+
+  async api_getUserProfile() {
+    let result = await changeAPI.getUserProfile();
+    console.log(result);
+  }
+
   // get -----------------------------------------------------------------------
 
   // returns the currently selected user
@@ -168,6 +208,7 @@ class POSPage extends Component {
             cashGiven={this.state.truth[PT_cashGiven]}
             onClick_cancelOrder={this.onClick_cancelOrder}
             onClick_updateCashAmount={this.onClick_updateCashAmount}
+            onClick_finishTransaction={this.onClick_finishTransaction}
           />
         </div>
       );
@@ -175,6 +216,12 @@ class POSPage extends Component {
       return (
         <div className="half_page_container">
           <div id="empty_payment_console">
+            <button className="test_button" onClick={this.api_getAllTransactions}>/get/transactions</button>
+            <button className="test_button" onClick={this.api_getAllTransactionsForUser}>/get/transactions/user</button>
+            <button className="test_button" onClick={this.api_getAllTransactionsForStore}>/get/transactions/store</button>
+            <button className="test_button" onClick={this.api_getUserProfile}>/get/user/profile</button>
+            <button className="test_button" onClick={this.api_getUserBankAccount}>/get/user/bankaccount</button>
+            <button className="test_button" onClick={this.api_finishTransaction}>/do/transaction</button>
           </div>
         </div>
       );
