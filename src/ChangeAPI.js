@@ -11,7 +11,7 @@
    - /get/user/bankaccount
 */
 
-let __url = "http://27c223b7.ngrok.io";
+let __url = "http://9aaae090.ngrok.io";
 
 let __defaultProfileID = "5e52a2f9-2e37-4699-94c9-165aa38a7271"
 let __defaultStoreID = "b7acdf48-cb62-4cf5-8389-61d361fa727f";
